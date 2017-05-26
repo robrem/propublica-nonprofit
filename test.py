@@ -2,9 +2,9 @@ import unittest
 import json
 import httplib2
 import urllib
-from nonprofit import Nonprofit, NonprofitError
+from nonprofit import Nonprofit, NonprofitError, check_ntee, check_c_code, check_state
 
-# Test case
+# Test cases
 EIN = '142007220'
 ORG = 'Delta'
 US_STATE = 'CA'
@@ -12,11 +12,21 @@ NTEE = 7     # Public, Societal Benefit
 C_CODE = 3   # 501(c)(3)
 
 
+def close_connections(http):
+    for key, conn in http.connections.items():
+        conn.close()
+
+
 class NonprofitTest(unittest.TestCase):
 
     def setUp(self):
         self.nonprofit = Nonprofit()
         self.http = httplib2.Http()
+
+
+    def tearDown(self):
+        close_connections(self.nonprofit.http)
+        close_connections(self.http)
 
 
     def check_response(self, result, url):
@@ -63,6 +73,31 @@ class OrgsTest(NonprofitTest):
         self.check_response(org, url)
 
 
+class ErrorTest(NonprofitTest):
+
+    def test_bad_ntee_arg(self):
+        with self.assertRaises(TypeError):
+            self.nonprofit.search.get(ntee=0)
+
+        with self.assertRaises(TypeError):
+            self.nonprofit.search.get(ntee=11)
+
+
+    def test_bad_c_code_arg(self):
+        with self.assertRaises(TypeError):
+            self.nonprofit.search.get(c_code=1)
+
+        with self.assertRaises(TypeError):
+            self.nonprofit.search.get(c_code=29)
+
+        with self.assertRaises(TypeError):
+            self.nonprofit.search.get(c_code=91)
+
+
+    def test_bad_state_arg(self):
+        with self.assertRaises(TypeError):
+            self.nonprofit.search.get(state='XX')
+
+
 if __name__ == "__main__":
     unittest.main()
-    
