@@ -12,21 +12,11 @@ NTEE = 7     # Public, Societal Benefit
 C_CODE = 3   # 501(c)(3)
 
 
-def close_connections(http):
-    for key, conn in http.connections.items():
-        conn.close()
-
-
 class NonprofitTest(unittest.TestCase):
 
     def setUp(self):
         self.nonprofit = Nonprofit()
         self.http = httplib2.Http()
-
-
-    def tearDown(self):
-        close_connections(self.nonprofit.http)
-        close_connections(self.http)
 
 
     def check_response(self, result, url):

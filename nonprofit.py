@@ -64,7 +64,7 @@ class Client(object):
         self.http = httplib2.Http(cache)
 
 
-    def fetch(self, path):
+    def fetch(self, path, parse=lambda orgs: orgs['organizations']):
         """ Make the API request. """
         url = self.BASE_URI + path
 
@@ -74,6 +74,9 @@ class Client(object):
         # TODO: check for content not found
         if not resp.get('status') == '200':
             raise NonprofitError(content, resp, url)
+
+        if callable(parse):
+            content = parse(content)
 
         return content
 
@@ -85,15 +88,6 @@ class SearchClient(Client):
             Returns a list of organizations matching the given search terms.
         """
 
-        """
-            TODO:
-            - regular search: q='terms'
-            - "exact" search appears to make no difference
-            - exact order: exact='terms'
-            - and: require=['term1', 'term2', 'etc']
-            - exclude: exclude='terms'
-            - state id: state='state_id'
-        """
         params = {}
         for key, value in kwargs.iteritems():
 
@@ -123,7 +117,7 @@ class OrgsClient(Client):
             identification number (ein).
         """
         path = 'organizations/{0}.json'.format(ein)
-        return self.fetch(path)
+        return self.fetch(path, lambda orgs: orgs['organization'])
 
 
 class Nonprofit(Client):
@@ -135,3 +129,4 @@ class Nonprofit(Client):
         super(Nonprofit, self).__init__(cache)
         self.search = SearchClient(cache)
         self.orgs = OrgsClient(cache)
+        
