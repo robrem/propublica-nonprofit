@@ -13,6 +13,11 @@ Query data on over 1.6 million nonprofit organizations. No API key is required, 
 >>> org['name']
 >>> 'CENTER FOR RESPONSIVE POLITICS'
 
+# get organizations by keyword
+>>> orgs = np.search.get(q='responsive')
+>>> orgs[0]['name']
+>>> 'RESPONSIVE EDUCATION SOLUTIONS'
+
 # get organizations by state
 >>> orgs = np.search.get(state='WA')
 >>> orgs[0]['name']
