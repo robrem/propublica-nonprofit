@@ -64,7 +64,7 @@ class Client(object):
         self.http = httplib2.Http(cache)
 
 
-    def fetch(self, path, parse=lambda orgs: orgs['organizations']):
+    def fetch(self, path, parse=''):
         """ Make the API request. """
         url = self.BASE_URI + path
 
@@ -107,7 +107,7 @@ class SearchClient(Client):
 
         params = urllib.urlencode(params)
         path = 'search.json?%s' % (params)
-        return self.fetch(path)
+        return self.fetch(path, lambda orgs: orgs['organizations'])
 
 
 class OrgsClient(Client):

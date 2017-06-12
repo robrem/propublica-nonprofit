@@ -1,12 +1,14 @@
 # Propublica Nonprofit Explorer Client
 Python client for the ProPublica [NonProfit Explorer API](https://www.propublica.org/datastore/api/nonprofit-explorer-api "ProPublica Nonprofit Explorer API docs").
 
+Query data on over 1.6 million nonprofit organizations. No API key is required, but please refer to ProPublica's terms of use.
+
 ## Usage
 ```
 >>> from nonprofit import Nonprofit
 >>> np = Nonprofit()
 
-# get organization by EIN
+# get organization by employer identification number (EIN)
 >>> org = np.orgs.get('521275227')
 >>> org['name']
 >>> 'CENTER FOR RESPONSIVE POLITICS'
