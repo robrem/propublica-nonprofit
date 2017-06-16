@@ -11,31 +11,31 @@ Query data on over 1.6 million nonprofit organizations. No API key is required, 
 # get organization by employer identification number (EIN)
 >>> org = np.orgs.get('521275227')
 >>> org['name']
->>> 'CENTER FOR RESPONSIVE POLITICS'
+'CENTER FOR RESPONSIVE POLITICS'
 
 # get organizations by keyword
 >>> orgs = np.search.get(q='responsive')
 >>> orgs[0]['name']
->>> 'RESPONSIVE EDUCATION SOLUTIONS'
+'RESPONSIVE EDUCATION SOLUTIONS'
 
 # get organizations by state
 >>> orgs = np.search.get(state='WA')
 >>> orgs[0]['name']
->>> '101 CLUB'
+'101 CLUB'
 
 # query by multiple parameters (q, state, c_code, ntee)
 >>> orgs = np.search.get(c_code=2, ntee=7)
 >>> orgs[0]['name']
->>> '1800 MASSACHUSETTS AVENUE CORP'
+'1800 MASSACHUSETTS AVENUE CORP'
 
 # use fetch to access endpoints directly
 >>> orgs = np.fetch('search.json?q=delta')
 >>> orgs['total_results']
->>> 2543
+2543
 
 # optionally use a custom lambda to parse results
 >>> orgs = np.fetch('search.json?q=delta', lambda orgs: orgs['organizations'][5])
 >>> orgs['name']
->>> 'DELTA DELTA DELTA CORP'
+'DELTA DELTA DELTA CORP'
 
 ```
