@@ -5,15 +5,15 @@ API docs: https://www.propublica.org/datastore/api/nonprofit-explorer-api
 """
 
 import json
-import httplib2
 import urllib
+import httplib2
 
 
 def check_ntee(ntee):
     """
         Returns true if ntee is a valid NTEE code; false otherwise.
     """
-    ntees = range(1,11)
+    ntees = range(1, 11)
 
     if ntee not in ntees:
         raise TypeError('Invalid ntee code')
@@ -23,7 +23,7 @@ def check_c_code(c_code):
     """
         Returns true if c_code is a valid tax code id; false otherwise.
     """
-    c_codes = range(2,29)
+    c_codes = range(2, 29)
     c_codes.append(92)
 
     if c_code not in c_codes:
@@ -35,12 +35,11 @@ def check_state(state):
         Returns true if state is a valid US state code; false otherwise.
     """
     states = [
-            "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", 
-            "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", 
-            "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", 
-            "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", 
-            "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "ZZ"
-            ]
+        "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
+        "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+        "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+        "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+        "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "ZZ"]
 
     if state not in states:
         raise TypeError('Invalid state code')
